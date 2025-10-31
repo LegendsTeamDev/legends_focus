@@ -14,7 +14,7 @@
 
 ## Preview
 
-![Legends Focus Preview](https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif)
+![Legends Focus Preview](https://i.postimg.cc/59sQmPyV/312-ezgif-com-optimize.gif)
 
 ## Installation
 
