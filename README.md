@@ -13,7 +13,7 @@
 * **Performance-Friendly:** Minimal resource usage to ensure smooth gameplay.
 
 ## Preview
-<a href="https://ibb.co/4ZVTLQNJ"><img src="https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif" alt="312-ezgif-com-optimize" border="0" /></a>
+[<a href="https://ibb.co/4ZVTLQNJ"><img src="https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif" alt="312-ezgif-com-optimize" border="0" /></a>](https://ibb.co/4ZVTLQNJ)
 
 ## Installation
 
