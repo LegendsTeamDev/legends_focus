@@ -12,7 +12,9 @@
 * **Adjustable Zoom Level:** Modify the zoom intensity through the configuration file.
 * **Performance-Friendly:** Minimal resource usage to ensure smooth gameplay.
 
-## Preview here: https://images-ext-1.discordapp.net/external/BMDOJthQp27jHJ_r71GRrL2U_QcKRPxlFAbYIqpBsUA/https/i.postimg.cc/59sQmPyV/312-ezgif-com-optimize.gif
+## Preview here: 
+
+![](https://ibb.co/4ZVTLQNJ)
 
 ## Installation
 
