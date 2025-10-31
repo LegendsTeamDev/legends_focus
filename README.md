@@ -14,7 +14,9 @@
 
 ## Preview
 
-![](https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif)
+<div align="center">
+  <img src="https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif" alt="Legends Focus Preview" width="600">
+</div>
 
 ## Installation
 
