@@ -12,9 +12,7 @@
 * **Adjustable Zoom Level:** Modify the zoom intensity through the configuration file.
 * **Performance-Friendly:** Minimal resource usage to ensure smooth gameplay.
 
-## Preview here: 
-
-![](https://ibb.co/4ZVTLQNJ)
+## Preview here: https://ibb.co/4ZVTLQNJ
 
 ## Installation
 
