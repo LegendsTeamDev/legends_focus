@@ -12,11 +12,7 @@
 * **Adjustable Zoom Level:** Modify the zoom intensity through the configuration file.
 * **Performance-Friendly:** Minimal resource usage to ensure smooth gameplay.
 
-## Preview
-
-<div align="center">
-  <img src="https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif" alt="Legends Focus Preview" width="600">
-</div>
+## Preview here: https://i.ibb.co/3yCNbJhk/312-ezgif-com-optimize.gif
 
 ## Installation
 
