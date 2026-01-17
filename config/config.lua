@@ -1,4 +1,4 @@
 Config = {}
 
-Config.Key = 137 -- https://docs.fivem.net/docs/game-references/controls/#controls
+Config.Key = 'CAPSLOCK' -- Default key binding for focus/zoom
 Config.FocusMultipllier = 20.0 -- Lower value = More zoom when focusing
