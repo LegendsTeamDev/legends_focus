@@ -3,7 +3,7 @@ game 'gta5'
 
 name 'Legends Focus'
 author 'Legends Scripts'
-version '1.0.0'
+version '1.0.1'
 description 'FOV Focus with key hold functionality'
 
 lua54 'yes'
@@ -22,4 +22,5 @@ server_scripts {
 
 escrow_ignore {
   'config/*.lua'
+
 }
