@@ -1,16 +1,14 @@
--- Legends Focus - Optimized Version
--- Zero idle CPU usage - only runs when actively zooming
-
 local cam = nil
 local isZooming = false
-local keyHeld = false -- Track if key is currently held
-local zoomFov = Config.FocusMultipllier
-local defaultGameplayFov = 70.0
-local currentFov = 70.0
+local keyHeld = false
+local pendingZoomOut = false
 local transitioning = false
+local currentFov = 70.0
+local defaultGameplayFov = 70.0
+local zoomFov = Config.FocusMultipllier
 local transitionSpeed = 2.5
+local lastKeyTime = 0
 
--- Capture the default gameplay FOV once, after the game camera initializes
 CreateThread(function()
     Wait(1000)
     local fov = GetGameplayCamFov()
@@ -20,7 +18,6 @@ CreateThread(function()
     end
 end)
 
--- Create camera
 local function CreateZoomCamera()
     if not cam or not DoesCamExist(cam) then
         cam = CreateCam("DEFAULT_SCRIPTED_CAMERA", true)
@@ -34,7 +31,6 @@ local function CreateZoomCamera()
     end
 end
 
--- Destroy camera
 local function DestroyZoomCamera()
     if cam and DoesCamExist(cam) then
         RenderScriptCams(false, false, 0, true, true)
@@ -43,7 +39,6 @@ local function DestroyZoomCamera()
     end
 end
 
--- Update camera to follow player
 local function UpdateCameraToFollowPlayer()
     if cam and DoesCamExist(cam) then
         local plyCoords = GetGameplayCamCoord()
@@ -53,7 +48,6 @@ local function UpdateCameraToFollowPlayer()
     end
 end
 
--- Camera update loop - ONLY runs while zooming
 local function StartCameraLoop()
     CreateThread(function()
         while isZooming or transitioning do
@@ -63,10 +57,8 @@ local function StartCameraLoop()
     end)
 end
 
--- Forward declaration
 local StopFocus
 
--- Smooth transition FOV
 local function TransitionFov(targetFov, onComplete)
     transitioning = true
     local step = targetFov > currentFov and transitionSpeed or -transitionSpeed
@@ -89,16 +81,27 @@ local function TransitionFov(targetFov, onComplete)
 
         if onComplete then
             onComplete()
-        elseif isZooming and not keyHeld then
-            -- Key was released during zoom-in, immediately start zoom-out
-            StopFocus()
+        elseif pendingZoomOut and not keyHeld then
+            pendingZoomOut = false
+            isZooming = false
+            local zoomOutTarget = defaultGameplayFov * 0.95
+            TransitionFov(zoomOutTarget, function()
+                DestroyZoomCamera()
+            end)
+        else
+            pendingZoomOut = false
         end
     end)
 end
 
--- Start focus (key pressed)
 local function StartFocus()
+    local now = GetGameTimer()
+    if now - lastKeyTime < 100 then return end
+    lastKeyTime = now
+
     keyHeld = true
+    pendingZoomOut = false
+
     if not isZooming and not transitioning then
         isZooming = true
         currentFov = defaultGameplayFov
@@ -108,21 +111,20 @@ local function StartFocus()
     end
 end
 
--- Stop focus (key released)
 StopFocus = function()
     keyHeld = false
-    if isZooming and not transitioning then
+
+    if transitioning then
+        pendingZoomOut = true
+    elseif isZooming then
         isZooming = false
-        local zoomOutTargetFov = defaultGameplayFov * 0.95
-        TransitionFov(zoomOutTargetFov, function()
+        local zoomOutTarget = defaultGameplayFov * 0.95
+        TransitionFov(zoomOutTarget, function()
             DestroyZoomCamera()
         end)
     end
 end
 
--- Event-driven key handling (zero idle cost)
 RegisterCommand('+focus', StartFocus, false)
 RegisterCommand('-focus', StopFocus, false)
-
--- Default key mapping - players can rebind in GTA settings
-RegisterKeyMapping('+focus', 'Focus/Zoom', 'keyboard', Config.Key)
+RegisterKeyMapping('+focus', 'Focus/Zoom', 'keyboard', 'CAPSLOCK')
