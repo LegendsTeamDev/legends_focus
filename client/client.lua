@@ -10,6 +10,9 @@ local transitionSpeed = 2.5
 local lastKeyTime = 0
 
 CreateThread(function()
+    while not LocalPlayer.state.isLoggedIn do
+        Wait(500)
+    end
     Wait(1000)
     local fov = GetGameplayCamFov()
     if fov >= 40.0 and fov <= 90.0 then
@@ -37,6 +40,16 @@ local function DestroyZoomCamera()
         DestroyCam(cam, false)
         cam = nil
     end
+end
+
+local function ResetZoomState()
+    DestroyZoomCamera()
+    RenderScriptCams(false, false, 0, true, true)
+    isZooming = false
+    keyHeld = false
+    pendingZoomOut = false
+    transitioning = false
+    currentFov = defaultGameplayFov
 end
 
 local function UpdateCameraToFollowPlayer()
@@ -128,3 +141,20 @@ end
 RegisterCommand('+focus', StartFocus, false)
 RegisterCommand('-focus', StopFocus, false)
 RegisterKeyMapping('+focus', 'Focus/Zoom', 'keyboard', 'CAPSLOCK')
+
+-- Cleanup handlers to fix zoom state after resource/server restart
+AddEventHandler('onResourceStop', function(resourceName)
+    if GetCurrentResourceName() == resourceName then
+        ResetZoomState()
+    end
+end)
+
+AddEventHandler('onResourceStart', function(resourceName)
+    if GetCurrentResourceName() == resourceName then
+        RenderScriptCams(false, false, 0, true, true)
+    end
+end)
+
+AddEventHandler('playerSpawned', function()
+    ResetZoomState()
+end)
